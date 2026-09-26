@@ -1,0 +1,167 @@
+{
+  "measuredAt": "2026-09-26T18:32:01.665Z",
+  "method": "Ten sequential synchronous calls in one Node process; all runs retained, no warmup excluded; file reads outside timer. Engine includes indexing and analysis; validation reported separately.",
+  "environment": {
+    "node": "v24.21.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "osRelease": "10.0.26200",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12600K"
+  },
+  "input": {
+    "seedPaths": [
+      "src/pages/SettingsPage.tsx",
+      "server/services/accountService.ts",
+      "server/data/accountRepository.ts"
+    ],
+    "requestText": "Add account deletion to the settings page. Remove the user's profile, related records, stored files, and saved OAuth tokens.",
+    "settings": {
+      "maxDepth": 3,
+      "includeTypeOnly": true
+    },
+    "snapshotFingerprint": "22283c948e50729cb787a10944898a8671612153e7679ed40b627565d81042d0",
+    "acceptedFiles": 35,
+    "acceptedBytes": 9334,
+    "sourceFiles": 23
+  },
+  "counts": {
+    "indexedRelationships": 59,
+    "resultRelationships": 41,
+    "resultImpacts": 25,
+    "relationshipsByKind": {
+      "api-reference": 2,
+      "document-reference": 7,
+      "env-reference": 1,
+      "import": 20,
+      "re-export": 1,
+      "schema-reference": 4,
+      "table-reference": 6
+    },
+    "roles": {
+      "dependency": 9,
+      "dependent": 4,
+      "reference": 9,
+      "seed": 3
+    },
+    "findings": 54,
+    "tasks": 37,
+    "unresolved": 0,
+    "warnings": 0
+  },
+  "milliseconds": {
+    "validation": {
+      "min": 0.3447999999999638,
+      "median": 0.40485000000001037,
+      "max": 4.124599999999987
+    },
+    "index": {
+      "min": 6.6524,
+      "median": 7.689100000000025,
+      "max": 36.92780000000005
+    },
+    "analysis": {
+      "min": 1.615700000000004,
+      "median": 2.011899999999997,
+      "max": 17.65809999999999
+    },
+    "engine": {
+      "min": 8.350100000000054,
+      "median": 9.606250000000017,
+      "max": 54.58590000000004
+    },
+    "total": {
+      "min": 8.694900000000018,
+      "median": 9.999099999999999,
+      "max": 58.710500000000025
+    }
+  },
+  "runs": [
+    {
+      "run": 1,
+      "validationMs": 4.124599999999987,
+      "indexMs": 36.92780000000005,
+      "analysisMs": 17.65809999999999,
+      "engineMs": 54.58590000000004,
+      "totalMs": 58.710500000000025
+    },
+    {
+      "run": 2,
+      "validationMs": 0.5446999999999775,
+      "indexMs": 9.600999999999999,
+      "analysisMs": 2.858600000000024,
+      "engineMs": 12.459600000000023,
+      "totalMs": 13.0043
+    },
+    {
+      "run": 3,
+      "validationMs": 0.453899999999976,
+      "indexMs": 9.9058,
+      "analysisMs": 2.0959000000000287,
+      "engineMs": 12.001700000000028,
+      "totalMs": 12.455600000000004
+    },
+    {
+      "run": 4,
+      "validationMs": 0.4189000000000078,
+      "indexMs": 7.79140000000001,
+      "analysisMs": 1.9064000000000192,
+      "engineMs": 9.69780000000003,
+      "totalMs": 10.116700000000037
+    },
+    {
+      "run": 5,
+      "validationMs": 0.41699999999997317,
+      "indexMs": 8.627100000000041,
+      "analysisMs": 1.782699999999977,
+      "engineMs": 10.409800000000018,
+      "totalMs": 10.826799999999992
+    },
+    {
+      "run": 6,
+      "validationMs": 0.38510000000002265,
+      "indexMs": 6.653899999999965,
+      "analysisMs": 2.6451000000000136,
+      "engineMs": 9.298999999999978,
+      "totalMs": 9.6841
+    },
+    {
+      "run": 7,
+      "validationMs": 0.3605999999999767,
+      "indexMs": 7.54060000000004,
+      "analysisMs": 1.630899999999997,
+      "engineMs": 9.171500000000037,
+      "totalMs": 9.532100000000014
+    },
+    {
+      "run": 8,
+      "validationMs": 0.39270000000004757,
+      "indexMs": 6.6524,
+      "analysisMs": 2.70169999999996,
+      "engineMs": 9.35409999999996,
+      "totalMs": 9.746800000000007
+    },
+    {
+      "run": 9,
+      "validationMs": 0.3447999999999638,
+      "indexMs": 6.734400000000051,
+      "analysisMs": 1.615700000000004,
+      "engineMs": 8.350100000000054,
+      "totalMs": 8.694900000000018
+    },
+    {
+      "run": 10,
+      "validationMs": 0.36679999999995516,
+      "indexMs": 7.586800000000039,
+      "analysisMs": 1.9278999999999655,
+      "engineMs": 9.514700000000005,
+      "totalMs": 9.88149999999996
+    }
+  ],
+  "manualBaseline": "Unmeasured. No productivity or time-saved comparison is claimed.",
+  "limits": [
+    "Synthetic 35-file fixture; results do not generalize to large or private repositories.",
+    "HTTP, worker startup/queue, browser rendering, source loading, and export times are excluded.",
+    "JIT/caches, background load, and a small sample influence measurements.",
+    "Counts are recognized relationships, not correctness, recall, precision, test coverage, or safety."
+  ]
+}

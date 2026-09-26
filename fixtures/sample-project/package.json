@@ -1,0 +1,8 @@
+{
+  "name": "pantry-synthetic-fixture",
+  "private": true,
+  "description": "Inert analysis fixture with mock data and storage clients. Pickle does not execute these scripts.",
+  "scripts": { "test": "vitest run", "start": "echo Synthetic fixture only" },
+  "dependencies": { "express": "5.2.1", "react": "19.3.0" },
+  "devDependencies": { "vitest": "5.0.2" }
+}

@@ -1,0 +1,9 @@
+Pickle_build_prompt.md
+fixtures/
+dist/
+dist-server/
+node_modules/
+package-lock.json
+docs/screenshots/
+test-results/
+playwright-report/

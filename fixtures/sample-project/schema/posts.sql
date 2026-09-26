@@ -1,0 +1,5 @@
+CREATE TABLE posts (
+  id TEXT PRIMARY KEY,
+  profile_id TEXT NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+  body TEXT NOT NULL
+);
