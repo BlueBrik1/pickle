@@ -5,18 +5,21 @@
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.12.0",
+    "vscode": "^1.96.0"
   },
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "build": "npm run build:server && vite build",
     "build:server": "tsc -p tsconfig.server.json",
     "start": "node dist-server/server/index.js",
-    "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit",
-    "lint": "eslint src server tests",
-    "test": "npm run build:server && vitest run",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.server.json --noEmit && tsc -p tsconfig.extension.json",
+    "lint": "eslint src server tests extension",
+    "test": "npm run build:server && npm run build:ext && vitest run",
     "test:e2e": "playwright test",
-    "verify": "npm run typecheck && npm run lint && npm test && npm run build && npm run test:e2e"
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build && npm run test:e2e",
+    "build:ext": "rolldown -c rolldown.config.mjs",
+    "test:vscode": "npm run build:ext && node tests/vscode/run.mjs"
   },
   "dependencies": {
     "@dagrejs/dagre": "3.1.1",
@@ -24,6 +27,7 @@
     "@fontsource/work-sans": "5.3.0",
     "@xyflow/react": "12.12.0",
     "express": "5.2.1",
+    "penny-design": "0.2.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "typescript": "6.0.3",
@@ -36,6 +40,7 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@types/vscode": "1.96.0",
     "@vitejs/plugin-react": "6.1.1",
     "eslint": "10.11.0",
     "node": "24.21.0",
@@ -43,5 +48,229 @@
     "typescript-eslint": "8.70.1",
     "vite": "8.3.1",
     "vitest": "5.0.2"
+  },
+  "displayName": "Pickle",
+  "description": "Know what a change will affect before you make it: impact analysis, project context and design drift for developers and AI agents.",
+  "publisher": "pickle-local",
+  "main": "./dist-ext/extension.cjs",
+  "categories": [
+    "Linters",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "In untrusted workspaces Pickle previews planned changes from file contents only; Git review, history context and running tests require trust."
+    }
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pickle",
+          "title": "Pickle",
+          "icon": "media/pickle.svg"
+        }
+      ]
+    },
+    "views": {
+      "pickle": [
+        {
+          "id": "pickle.report",
+          "name": "Report"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "pickle.report",
+        "contents": "Pickle shows what a change will affect, which requirements and decisions apply, and what may break or drift — before you commit.\n[$(git-compare) Analyze Current Changes](command:pickle.analyzeChanges)\n[$(lightbulb) Preview Planned Change](command:pickle.previewChange)\nLocal analysis needs no account. Optionally connect GitHub, Slack, Claude Code or Codex context, or install agent and pre-commit hooks.\n[$(plug) Configure Integrations](command:pickle.configureIntegrations)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "pickle.analyzeChanges",
+        "title": "Analyze Current Changes",
+        "category": "Pickle",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "pickle.previewChange",
+        "title": "Preview Planned Change",
+        "category": "Pickle",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "pickle.showImpact",
+        "title": "Show Impact",
+        "category": "Pickle",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "pickle.showContext",
+        "title": "Show Relevant Context",
+        "category": "Pickle",
+        "icon": "$(book)"
+      },
+      {
+        "command": "pickle.scanDesign",
+        "title": "Scan Design Drift",
+        "category": "Pickle",
+        "icon": "$(paintcan)"
+      },
+      {
+        "command": "pickle.reviewFixes",
+        "title": "Review Suggested Fixes",
+        "category": "Pickle",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "pickle.revertFix",
+        "title": "Revert Last Fix",
+        "category": "Pickle",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "pickle.preCommitReview",
+        "title": "Run Pre-Commit Review",
+        "category": "Pickle",
+        "icon": "$(git-commit)"
+      },
+      {
+        "command": "pickle.runVerification",
+        "title": "Run Suggested Verification",
+        "category": "Pickle",
+        "icon": "$(play)"
+      },
+      {
+        "command": "pickle.configureIntegrations",
+        "title": "Configure Integrations",
+        "category": "Pickle",
+        "icon": "$(plug)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "pickle.analyzeChanges",
+          "when": "view == pickle.report",
+          "group": "navigation@1"
+        },
+        {
+          "command": "pickle.previewChange",
+          "when": "view == pickle.report",
+          "group": "navigation@2"
+        },
+        {
+          "command": "pickle.showImpact",
+          "when": "view == pickle.report",
+          "group": "navigation@3"
+        },
+        {
+          "command": "pickle.scanDesign",
+          "when": "view == pickle.report",
+          "group": "1_more@1"
+        },
+        {
+          "command": "pickle.preCommitReview",
+          "when": "view == pickle.report",
+          "group": "1_more@2"
+        },
+        {
+          "command": "pickle.configureIntegrations",
+          "when": "view == pickle.report",
+          "group": "1_more@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "pickle.reviewFixes",
+          "when": "view == pickle.report && viewItem == fixable",
+          "group": "inline"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "pickle.runVerification",
+          "when": "pickle.trusted"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Pickle",
+      "properties": {
+        "pickle.autoAnalyze": {
+          "type": "string",
+          "enum": [
+            "onChange",
+            "off"
+          ],
+          "default": "onChange",
+          "description": "Re-analyze uncommitted changes after files change on disk (debounced). Never per keystroke."
+        },
+        "pickle.autoAnalyzeDelayMs": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 500,
+          "description": "Quiet period before automatic re-analysis."
+        },
+        "pickle.maxFiles": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 100,
+          "description": "Maximum source files indexed. Files beyond it are reported as not analyzed."
+        },
+        "pickle.design.tokensFile": {
+          "type": "string",
+          "default": "",
+          "description": "Design-token JSON (Penny format: colors/spacing/typography). Empty: auto-detect, else infer tokens from code."
+        },
+        "pickle.context.github": {
+          "type": "boolean",
+          "default": false,
+          "description": "Read GitHub issues and PRs of the origin repository via VS Code GitHub sign-in. Enable through Configure Integrations."
+        },
+        "pickle.context.slackChannels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Slack channel IDs to read. The token lives in secret storage; set it through Configure Integrations."
+        },
+        "pickle.context.claudeCode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Read this folder's local Claude Code transcripts (~/.claude/projects)."
+        },
+        "pickle.context.codex": {
+          "type": "boolean",
+          "default": false,
+          "description": "Read local Codex rollouts (~/.codex/sessions) recorded in this folder."
+        },
+        "pickle.context.fixtureFile": {
+          "type": "string",
+          "default": "",
+          "description": "Workspace-relative JSON of GitHub-shaped issues used as labeled fixture context (demos and tests)."
+        },
+        "pickle.precommit.blocking": {
+          "type": "boolean",
+          "default": false,
+          "description": "When the Pickle pre-commit hook is installed, fail commits with confirmed high-severity findings."
+        },
+        "pickle.agent.stopReview": {
+          "type": "string",
+          "enum": [
+            "advise",
+            "block-on-high"
+          ],
+          "default": "advise",
+          "description": "Claude Code Stop hook: show a summary, or ask Claude to address high-severity risks before stopping."
+        }
+      }
+    }
   }
 }

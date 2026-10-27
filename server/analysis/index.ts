@@ -1007,6 +1007,8 @@ export function analyze(
     repositoryId: string;
     requestText: string;
     seedFileIds: string[];
+    // The web UI keeps the 8-file confirmation cap; diff review seeds every changed file.
+    maxSeeds?: number;
     settings: Settings;
   },
   onStage?: (stage: string) => void,
@@ -1031,7 +1033,7 @@ export function analyze(
   const seeds = unique(input.seedFileIds).sort((a, b) =>
     compare(byId.get(a)?.path ?? a, byId.get(b)?.path ?? b),
   );
-  if (!seeds.length || seeds.length > 8 || seeds.some((s) => !byId.has(s)))
+  if (!seeds.length || seeds.length > (input.maxSeeds ?? 8) || seeds.some((s) => !byId.has(s)))
     throw new Error('Select one to eight accepted starting files.');
   if (input.settings.maxDepth < 1 || input.settings.maxDepth > 5)
     throw new Error('Depth must be between one and five.');

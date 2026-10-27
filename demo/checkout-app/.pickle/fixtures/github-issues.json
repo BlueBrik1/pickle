@@ -1,0 +1,24 @@
+{
+  "note": "FIXTURE. Hand-written stand-in for GitHub issues; not fetched from GitHub. Pickle labels every item from this file as [fixture].",
+  "items": [
+    {
+      "number": 42,
+      "title": "Double-clicking Place order charges customers twice",
+      "body": "Repro: double-click the checkout button on a slow network. Two orders are created. The checkout button must be disabled while submitting and placeOrder must ignore repeat calls.",
+      "state": "closed",
+      "state_reason": "completed",
+      "labels": ["bug", "requirement", "checkout"],
+      "html_url": "https://github.com/example/checkout-demo/issues/42",
+      "updated_at": "2026-08-14T10:00:00Z"
+    },
+    {
+      "number": 57,
+      "title": "Dark mode for the settings page",
+      "body": "Add a dark theme toggle to the settings page.",
+      "state": "open",
+      "labels": ["enhancement"],
+      "html_url": "https://github.com/example/checkout-demo/issues/57",
+      "updated_at": "2026-09-02T10:00:00Z"
+    }
+  ]
+}

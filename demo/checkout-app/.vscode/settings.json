@@ -1,0 +1,4 @@
+{
+  // Local fixture standing in for GitHub issues. Pickle labels every item from it "[fixture]".
+  "pickle.context.fixtureFile": ".pickle/fixtures/github-issues.json"
+}

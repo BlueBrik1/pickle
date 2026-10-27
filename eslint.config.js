@@ -1,6 +1,6 @@
 import tseslint from 'typescript-eslint';
 export default tseslint.config(
-  { ignores: ['dist/**', 'dist-server/**', 'fixtures/**'] },
+  { ignores: ['dist/**', 'dist-server/**', 'dist-ext/**', 'fixtures/**', 'demo/**', '.demo/**', '.demo-test/**'] },
   ...tseslint.configs.recommended,
   {
     rules: {
@@ -11,4 +11,6 @@ export default tseslint.config(
       ],
     },
   },
+  // VS Code loads the integration-test runner as CommonJS.
+  { files: ['**/*.cjs'], rules: { '@typescript-eslint/no-require-imports': 'off' } },
 );

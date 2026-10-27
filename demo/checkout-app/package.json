@@ -1,0 +1,8 @@
+{
+  "name": "pickle-demo-checkout",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  }
+}
